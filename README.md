@@ -1,4 +1,4 @@
-# WhatsApp Redirect
+# Just Message!
 
 A small web app that opens a WhatsApp chat from a phone number, without requiring
 the number to be saved as a contact first.
