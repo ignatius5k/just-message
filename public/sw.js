@@ -1,4 +1,4 @@
-const CACHE_NAME = "whatsapp-redirect-v1";
+const CACHE_NAME = "just-message-v2";
 const APP_SHELL = [
   "./",
   "./index.html",

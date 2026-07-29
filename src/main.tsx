@@ -40,7 +40,7 @@ function App() {
         </div>
 
         <div className="intro">
-          <h1 id="page-title">WhatsApp Redirect</h1>
+          <h1 id="page-title">Just Message!</h1>
           <p>Enter a phone number with country code to start chatting</p>
         </div>
 
@@ -51,7 +51,7 @@ function App() {
             type="tel"
             inputMode="tel"
             autoComplete="tel"
-            placeholder="+1 555 123 4567"
+            placeholder="+65 9123 4567"
             value={phone}
             onChange={(event) => {
               setPhone(event.target.value);
@@ -67,7 +67,7 @@ function App() {
         </form>
 
         <p className="help" id="phone-help">
-          Include your country code (e.g. +1 for US, +44 for UK, +91 for India)
+          Include your country code (e.g. +65 for Singapore)
         </p>
       </section>
     </main>

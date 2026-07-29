@@ -1,7 +1,7 @@
 {
   "id": "./",
-  "name": "WhatsApp Redirect",
-  "short_name": "WA Redirect",
+  "name": "Just Message!",
+  "short_name": "Just Message!",
   "description": "Open a WhatsApp chat without saving the phone number.",
   "start_url": "./",
   "scope": "./",
