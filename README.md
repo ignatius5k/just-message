@@ -3,6 +3,12 @@
 A small web app that opens a WhatsApp chat from a phone number, without requiring
 the number to be saved as a contact first.
 
+## PWA support
+
+The app can be installed from a supported browser and launched like a native
+app. Its interface remains available offline after the first successful visit.
+An internet connection is still required when opening a WhatsApp conversation.
+
 ## Local development
 
 ```bash
