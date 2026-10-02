@@ -1,4 +1,4 @@
-import { StrictMode, useState, type FormEvent } from "react";
+import { StrictMode, useRef, useState, type FormEvent } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
 
@@ -18,6 +18,34 @@ function WhatsAppMark() {
 function App() {
   const [phone, setPhone] = useState("");
   const [error, setError] = useState("");
+
+  const phoneInput = useRef<HTMLInputElement>(null);
+  const [isPasting, setIsPasting] = useState(false);
+
+  async function pastePhone() {
+    setError("");
+    setIsPasting(true);
+
+    try {
+      if (!navigator.clipboard?.readText) {
+        setError("Clipboard access is unavailable. Paste directly into the phone number field.");
+        return;
+      }
+
+      const text = (await navigator.clipboard.readText()).trim();
+      if (!text) {
+        setError("Your clipboard is empty. Copy a phone number first.");
+        return;
+      }
+
+      setPhone(text);
+    } catch {
+      setError("Couldn’t read your clipboard. Paste directly into the phone number field.");
+    } finally {
+      setIsPasting(false);
+      phoneInput.current?.focus();
+    }
+  }
 
   function openWhatsApp(event: FormEvent) {
     event.preventDefault();
@@ -46,20 +74,32 @@ function App() {
 
         <form onSubmit={openWhatsApp} noValidate>
           <label htmlFor="phone">Phone number</label>
-          <input
-            id="phone"
-            type="tel"
-            inputMode="tel"
-            autoComplete="tel"
-            placeholder="+65 9123 4567"
-            value={phone}
-            onChange={(event) => {
-              setPhone(event.target.value);
-              if (error) setError("");
-            }}
-            aria-describedby={error ? "phone-error phone-help" : "phone-help"}
-            aria-invalid={Boolean(error)}
-          />
+          <div className="phone-entry">
+            <input
+              ref={phoneInput}
+              id="phone"
+              type="tel"
+              inputMode="tel"
+              autoComplete="tel"
+              placeholder="+65 9123 4567"
+              value={phone}
+              onChange={(event) => {
+                setPhone(event.target.value);
+                if (error) setError("");
+              }}
+              aria-describedby={error ? "phone-error phone-help" : "phone-help"}
+              aria-invalid={Boolean(error)}
+            />
+            <button
+              className="paste-button"
+              type="button"
+              onClick={pastePhone}
+              disabled={isPasting}
+              aria-label="Paste phone number from clipboard"
+            >
+              {isPasting ? "Pasting…" : "Paste"}
+            </button>
+          </div>
           <button type="submit">Open in WhatsApp</button>
           <p className="error" id="phone-error" role="alert" aria-live="polite">
             {error}
