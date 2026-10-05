@@ -218,8 +218,10 @@ button:focus-visible {
   background: #242824;
 }
 
-.paste-button:disabled {
-  cursor: wait;
-  opacity: 0.65;
-  transform: none;
+.paste-help {
+  margin: 10px 0 0;
+  color: #a3b8d7;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  text-align: left;
 }

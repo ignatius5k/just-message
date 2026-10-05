@@ -1,4 +1,4 @@
-import { StrictMode, useRef, useState, type FormEvent } from "react";
+import { StrictMode, useState, type FormEvent } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
 
@@ -19,16 +19,10 @@ function App() {
   const [phone, setPhone] = useState("");
   const [error, setError] = useState("");
 
-  const phoneInput = useRef<HTMLInputElement>(null);
-  const [isPasting, setIsPasting] = useState(false);
-
   async function pastePhone() {
-    setError("");
-    setIsPasting(true);
-
     try {
       if (!navigator.clipboard?.readText) {
-        setError("Clipboard access is unavailable. Paste directly into the phone number field.");
+        setError("Clipboard access is unavailable. Touch and hold the phone number field, then choose Paste.");
         return;
       }
 
@@ -39,11 +33,9 @@ function App() {
       }
 
       setPhone(text);
+      setError("");
     } catch {
-      setError("Couldn’t read your clipboard. Paste directly into the phone number field.");
-    } finally {
-      setIsPasting(false);
-      phoneInput.current?.focus();
+      setError("Couldn’t read your clipboard. Touch and hold the phone number field, then choose Paste.");
     }
   }
 
@@ -76,7 +68,6 @@ function App() {
           <label htmlFor="phone">Phone number</label>
           <div className="phone-entry">
             <input
-              ref={phoneInput}
               id="phone"
               type="tel"
               inputMode="tel"
@@ -94,12 +85,15 @@ function App() {
               className="paste-button"
               type="button"
               onClick={pastePhone}
-              disabled={isPasting}
               aria-label="Paste phone number from clipboard"
+              aria-describedby="paste-help"
             >
-              {isPasting ? "Pasting…" : "Paste"}
+              Paste
             </button>
           </div>
+          <p className="paste-help" id="paste-help">
+            On iPhone, tap Paste again in the system prompt.
+          </p>
           <button type="submit">Open in WhatsApp</button>
           <p className="error" id="phone-error" role="alert" aria-live="polite">
             {error}
